@@ -1,25 +1,27 @@
 #include <iostream>
 
-bool is_prime(int number){
+int pow(int base, int power){
+    int result = 1;
 
-    for (int i = 2; i<number; i++) {
-        if (number % i == 0) {
-            return false;
-        }
+    for(int i = 0; i < power; i++){
+        result *= base;
     }
-    return true;
+    return result;
+}
+int read_int(){
+    std::cout <<"Please introduce a number\n";
+
+    int n;
+    std::cin >> n;
+    return n;
 }
 int main()
 {
-  std::cout <<"Please introduce a number\n";
+  int base = read_int();
+  int power = read_int();
 
-  int number;
-  std::cin >> number;
+  int result = pow(base, power);
 
-  if (is_prime(number)){
-      std::cout <<"Your number is prime"<< std::endl;
-
-  } else {
-      std::cout <<"Your number is NOT prime"<<std::endl;
-  }
+  std::cout <<"The result is: "<< result << std::endl;
+  return 0;
 }
