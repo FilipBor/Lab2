@@ -1,18 +1,10 @@
 #include <iostream>
 
-int fibonacci_iterative( int index ){
-    int a = 0;
-    int b = 1;
-    if (index == 0 || index == 1){
+int fibonacci_recursive(int index){
+    if (index < 2){
         return index;
     }
-
-    for (int i = 2; i < index; i++){
-        int tmp = a + b;
-        a = b;
-        b = tmp;
-    }
-    return b;
+    return fibonacci_recursive(index-2) + fibonacci_recursive(index - 1);
 }
 int read_int(){
     std::cout <<"Please introduce a number\n";
@@ -25,7 +17,7 @@ int main()
 {
   int index = read_int();
 
-  int result = fibonacci_iterative(index);
+  int result = fibonacci_recursive(index);
 
   std::cout <<"The result is: "<< result << std::endl;
   return 0;
