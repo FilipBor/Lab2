@@ -1,11 +1,7 @@
 #include <iostream>
 #include <fstream>
-#include <string>
-#include <vector>
-
+#include <iomanip>
 int read_int(){
-
-    std::cout <<"Please introduce a number:"<<std::endl;
 
     int n;
     std::cin >> n;
@@ -13,53 +9,41 @@ int read_int(){
 }
 int main(){
 
-    std::cout <<"How many numbers do you want to write?"<<std::endl;
-    int total_numbers = read_int();
-
-    std::vector <int> values;
-    for(int i = 0; i < total_numbers; i++)
+    std::cout <<"Enter range of desired multiplication table"<<std::endl; // asking user to input table range
+    std::cout <<"Starting value: \n"; // asking user to input table range
+    int begin = read_int(); // reading and assigning starting value to a variable
+    std::cout <<"Ending value: \n"; // asking user to input table range
+    int stop = read_int(); // reading and assigning ending value to a variable
+    std::ofstream file; // opening file stream
+    file.open("table.txt"); // opening file
+    for ( int i = begin; i <= stop; i++ ) // outer loop for printing table
     {
-        int tmp = read_int();
-        values.push_back(tmp);
+        if ( i == begin) // condition for printing table
+        {
+            file << std::setw(4) <<" "; // setting indention
+
+            for (int first_row = begin; first_row <= stop; first_row++) { // loop for printing rows
+                file << std::setw(3) << first_row << " "; // saving rows to file
+            }
+            file << std::endl;
+            file << std::setw(4) <<" "; // setting indention
+            for (int second_row = begin; second_row <= stop; second_row++) // loop for printing dashes
+            {
+                file << "----";
+            }
+            file << std::endl;
+        }
+
+        for ( int j = begin; j <= stop; j++) // loop used for printing numbers and multiplication
+        {
+            if ( j == begin) // condition for printing numbers and multiplication
+            {
+                file << std::setw(3) << i << "|"; // setting indention, printing numbers and |
+            }
+            file << std::setw(3) << i*j << " "; // setting indention and printing multiplication result
+        }
+        file << std::endl;
     }
-    std::ofstream file;
-    file.open ("values.txt");
-
-    for (int i = 0; i < total_numbers; i++)
-    {
-        file << values[i] << "\n";
-    }
-
-    file.close();
-
-    std::vector<int> read_values;
-
-    std::ifstream new_file("values.txt");
-
-      if (new_file.is_open())
-       {
-         std::string line;
-
-      while(getline(new_file, line))
-       {
-          read_values.push_back(std::stoi(line));
-
-       }
-        new_file.close();
-      }
-       else
-           {
-         std::cout <<"There was a problem opening the file";
-     }
-
-     float sum = 0;
-
-       for (int i = 0; i < total_numbers; i++){
-           sum += read_values[i];
-       }
-
-       float mean = sum / total_numbers;
-
-       std::cout <<"Mean = "<< mean<<std::endl;
+    file.close();  // closing file to save changes
   return 0;
 }
